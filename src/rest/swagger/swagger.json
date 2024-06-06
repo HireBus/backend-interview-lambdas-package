@@ -1,0 +1,3154 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Nick API - HireBus",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "description": "register",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email to register"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password to register"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Register successfully."
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "Login",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email to login"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password to login"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged in successfully."
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "description": "Get logged in user profile",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile data"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "put": {
+        "description": "Update user profile",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first": {
+                    "type": "string",
+                    "description": "First name"
+                  },
+                  "last": {
+                    "type": "string",
+                    "description": "Last name"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "Industry"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "description": "Slug"
+                  },
+                  "tier": {
+                    "type": "number",
+                    "description": "Tier"
+                  },
+                  "active": {
+                    "type": "number",
+                    "description": "Active"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/users/search": {
+      "post": {
+        "description": "Searches for user filtering by email or name",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "searchText": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "companyId": {
+                    "type": "number"
+                  },
+                  "orderBy": {
+                    "type": "object"
+                  },
+                  "includeTestUsers": {
+                    "type": "boolean"
+                  },
+                  "includeArchivedUsers": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Creates a user",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "companyId": {
+                    "type": "number"
+                  },
+                  "isTest": {
+                    "type": "boolean"
+                  },
+                  "receivesEmailOnAssessmentCompleted": {
+                    "type": "boolean"
+                  },
+                  "permissions": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "description": "Updates the user with the given id",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "receivesEmailOnAssessmentCompleted": {
+                    "type": "boolean"
+                  },
+                  "isTest": {
+                    "type": "boolean"
+                  },
+                  "permissions": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/public/users/set-up-password": {
+      "post": {
+        "description": "Set up user password",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "setUpToken": {
+                    "type": "string",
+                    "description": "Reset token"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password set up successfully"
+          }
+        }
+      }
+    },
+    "/users/reset-password": {
+      "put": {
+        "description": "Reset user password",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "resetToken": {
+                    "type": "string",
+                    "description": "Reset token"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "New password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/companies/list": {
+      "get": {
+        "description": "Get list of all companies",
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "All Companies Retrieved."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/companies/search": {
+      "post": {
+        "description": "Search Companies",
+        "tags": [
+          "Companies"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "searchText": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "orderBy": {
+                    "type": "object"
+                  },
+                  "includeTestCompanies": {
+                    "type": "boolean"
+                  },
+                  "includeInactiveCompanies": {
+                    "type": "boolean"
+                  },
+                  "includeArchivedCompanies": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/companies/create": {
+      "post": {
+        "description": "Create a company",
+        "tags": [
+          "Companies"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company": {
+                    "type": "string"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "industry": {
+                    "type": "string"
+                  },
+                  "require_phone_number": {
+                    "type": "boolean"
+                  },
+                  "archived_at": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "number"
+                  },
+                  "is_test": {
+                    "type": "boolean"
+                  },
+                  "companyCreationSecretKey": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "goHighLevelLocationId": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/companies/update": {
+      "post": {
+        "description": "Update/edit a company",
+        "tags": [
+          "Companies"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "industry": {
+                    "type": "string"
+                  },
+                  "require_phone_number": {
+                    "type": "boolean"
+                  },
+                  "archived_at": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "number"
+                  },
+                  "is_test": {
+                    "type": "boolean"
+                  },
+                  "goHighLevelLocationId": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/public/companies": {
+      "get": {
+        "description": "Get company public info",
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company Slug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company Public Info Retrieved."
+          }
+        }
+      }
+    },
+    "/companies/{id}/logo": {
+      "put": {
+        "description": "Upload a company logo",
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "file",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Company logo uploaded successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a company logo",
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company logo removed successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/public/companies/role-names": {
+      "get": {
+        "description": "Get public company role names",
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companySlug",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company Slug"
+          },
+          {
+            "in": "query",
+            "name": "companyId",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company Role Names Retrieved."
+          }
+        }
+      }
+    },
+    "/survey-results/search": {
+      "post": {
+        "description": "Search Survey Results.",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Company Name"
+                  },
+                  "companies": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Company Names (for Franchise Owner, separated by ~)"
+                  },
+                  "endDate": {
+                    "type": "date",
+                    "description": "End Date",
+                    "default": "2030-07-21T16:26:05.258Z"
+                  },
+                  "isForTopLevelKanbanBoard": {
+                    "type": "boolean",
+                    "optional": true,
+                    "default": false,
+                    "description": "Is for Top-Level Kanban Board"
+                  },
+                  "includeArchivedAssessments": {
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "Include Archived Assessments",
+                    "default": false
+                  },
+                  "includeTestAssessments": {
+                    "type": "boolean",
+                    "optional": true,
+                    "description": "Include Test Assessments",
+                    "default": false
+                  },
+                  "searchText": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Search Text"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Status",
+                    "default": ""
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "description": "Statuses",
+                    "default": []
+                  },
+                  "roles": {
+                    "type": "array",
+                    "description": "Roles",
+                    "default": []
+                  },
+                  "limit": {
+                    "type": "number",
+                    "default": 10,
+                    "description": "Limit"
+                  },
+                  "offset": {
+                    "type": "number",
+                    "description": "Offset"
+                  },
+                  "orderBy": {
+                    "type": "object",
+                    "properties": {
+                      "role_name": {
+                        "type": "string",
+                        "description": "Role Name",
+                        "default": ""
+                      },
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "id",
+                          "checked",
+                          "city",
+                          "company",
+                          "countryCode",
+                          "created",
+                          "e3_adjectives",
+                          "e3_chart",
+                          "e3_scales",
+                          "e3_scales21",
+                          "email",
+                          "first",
+                          "industry",
+                          "ip",
+                          "last",
+                          "role",
+                          "misc",
+                          "phone",
+                          "status",
+                          "region",
+                          "region_name",
+                          "sid",
+                          "starred",
+                          "status",
+                          "utm_campaign",
+                          "utm_content",
+                          "utm_medium",
+                          "utm_source",
+                          "utm_term",
+                          "zip"
+                        ],
+                        "description": "Field to sort by"
+                      },
+                      "order": {
+                        "type": "string",
+                        "enum": [
+                          "asc",
+                          "desc"
+                        ],
+                        "description": "Order to sort by"
+                      }
+                    }
+                  },
+                  "sortByColumnPosition": {
+                    "type": "boolean",
+                    "description": "Sort by Column Position",
+                    "default": false
+                  },
+                  "startDate": {
+                    "type": "date",
+                    "description": "Start Date",
+                    "default": "2020-07-20T16:25:06.334Z"
+                  },
+                  "pipelineId": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Pipeline ID"
+                  },
+                  "pipelineStageId": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "description": "Pipeline Stage ID",
+                        "default": ""
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Array of Pipeline Stage IDs",
+                        "default": []
+                      }
+                    ],
+                    "description": "Pipeline Stage ID or Array of Pipeline Stage IDs"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Survey Results Retrieved."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/": {
+      "get": {
+        "description": "Get a Single Survey Results",
+        "tags": [
+          "Survey Results"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Survey Result Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Survey Result Retrieved."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/update-status": {
+      "post": {
+        "description": "Update status of survey result(s)",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "description": "Ids of survey results to update status for",
+                    "default": []
+                  },
+                  "newStatus": {
+                    "type": "string",
+                    "description": "New status to set for survey results"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated the status of the survey result(s) successfully."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/update-role": {
+      "post": {
+        "description": "Update the role of one or more survey results",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyResultIds": {
+                    "type": "string",
+                    "description": "The ids of the survey results to update",
+                    "default": []
+                  },
+                  "newRole": {
+                    "type": "string",
+                    "description": "The new role to assign to the survey results",
+                    "default": "New"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated roles of survey result(s)"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/update": {
+      "post": {
+        "description": "Update Survey Result",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "archivedAt": {
+                    "type": "string"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "isTest": {
+                    "type": "boolean"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "surveyResultId": {
+                    "type": "number"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/update-column-positions": {
+      "post": {
+        "description": "Update survey result column positions",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "values": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/move-all-of-status-to-new-status": {
+      "post": {
+        "description": "Move all survey results of a status to a new status.",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fromStatus": {
+                    "type": "string"
+                  },
+                  "toStatus": {
+                    "type": "string"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "companies": {
+                    "type": "array"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/clear-column-positions-of-status": {
+      "post": {
+        "description": "Clear the column position for all survey results of a status, for a particular company",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/survey-results/generate-analysis-and-interview-questions": {
+      "post": {
+        "description": "Generate survey result analysis and interview questions",
+        "tags": [
+          "Survey Results"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyResultId": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/survey-results/public/encode-report-payload": {
+      "post": {
+        "tags": [
+          "Survey Results"
+        ],
+        "summary": "Encode Survey Result Payload",
+        "description": "Encodes the payload for survey results to be publicly accessible.",
+        "operationId": "encodeReportPayload",
+        "security": [
+          {
+            "ID Token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "surveyResultId": {
+                    "type": "number",
+                    "description": "The ID of the survey result to encode."
+                  },
+                  "reportsToInclude": {
+                    "type": "object",
+                    "properties": {
+                      "benchmarksReport": {
+                        "type": "boolean",
+                        "description": "Include benchmarks report."
+                      },
+                      "coachingReport": {
+                        "type": "boolean",
+                        "description": "Include coaching report."
+                      },
+                      "lineChart": {
+                        "type": "boolean",
+                        "description": "Include line chart."
+                      },
+                      "behavioralQuestions": {
+                        "type": "boolean",
+                        "description": "Include behavioral questions."
+                      }
+                    },
+                    "required": [
+                      "benchmarksReport",
+                      "coachingReport",
+                      "lineChart",
+                      "behavioralQuestions"
+                    ]
+                  }
+                },
+                "required": [
+                  "surveyResultId",
+                  "reportsToInclude"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Success"
+                      ],
+                      "description": "Response type indicating success."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "encodedPayload": {
+                          "type": "string",
+                          "description": "The encoded payload for the survey result."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message describing what went wrong."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message indicating unauthorized access."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message indicating forbidden access."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message indicating internal server error."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survey-results/public/": {
+      "get": {
+        "tags": [
+          "Survey Results"
+        ],
+        "summary": "Get Public Survey Result via Encoded Payload",
+        "description": "Fetches a detailed survey result using an encoded payload.",
+        "operationId": "getPublicSurveyResultViaEncodedPayload",
+        "parameters": [
+          {
+            "name": "encodedPayload",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The encoded payload containing the survey result ID and reports to include."
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Success"
+                      ],
+                      "description": "Response type indicating success."
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "surveyResult": {
+                          "type": "object",
+                          "description": "The detailed survey result."
+                        },
+                        "reportsToInclude": {
+                          "type": "object",
+                          "properties": {
+                            "benchmarksReport": {
+                              "type": "boolean",
+                              "description": "Include benchmarks report."
+                            },
+                            "coachingReport": {
+                              "type": "boolean",
+                              "description": "Include coaching report."
+                            },
+                            "lineChart": {
+                              "type": "boolean",
+                              "description": "Include line chart."
+                            },
+                            "behavioralQuestions": {
+                              "type": "boolean",
+                              "description": "Include behavioral questions."
+                            }
+                          },
+                          "required": [
+                            "benchmarksReport",
+                            "coachingReport",
+                            "lineChart",
+                            "behavioralQuestions"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "surveyResult",
+                        "reportsToInclude"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message describing what went wrong."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message indicating resource not found."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "Error"
+                      ],
+                      "description": "Response type indicating an error."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Error message indicating internal server error."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/surveys/register": {
+      "post": {
+        "description": "Register a survey",
+        "tags": [
+          "Surveys"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companySlug": {
+                    "type": "string"
+                  },
+                  "utmSource": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "opportunityId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Survey registered successfully"
+          }
+        }
+      }
+    },
+    "/surveys/submit": {
+      "post": {
+        "description": "Submit a survey",
+        "tags": [
+          "Surveys"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "adjectiveNumbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Survey submitted successfully"
+          }
+        }
+      }
+    },
+    "/candidate-notes": {
+      "post": {
+        "description": "Create Candidate Note",
+        "tags": [
+          "Candidate Notes"
+        ],
+        "parameters": [
+          {
+            "name": "surveyResultId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Candidate note created successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "get": {
+        "description": "Get Candidate Notes by Survey Result ID",
+        "tags": [
+          "Candidate Notes"
+        ],
+        "parameters": [
+          {
+            "name": "surveyResultId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate notes retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/candidate-notes/{candidateNoteId}": {
+      "put": {
+        "description": "Update Candidate Note",
+        "tags": [
+          "Candidate Notes"
+        ],
+        "parameters": [
+          {
+            "name": "candidateNoteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate notes updated successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete Candidate Note by ID",
+        "tags": [
+          "Candidate Notes"
+        ],
+        "parameters": [
+          {
+            "name": "candidateNoteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate notes deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/candidates/{candidateId}/stage": {
+      "put": {
+        "description": "Update candidate stage",
+        "tags": [
+          "Candidates"
+        ],
+        "parameters": [
+          {
+            "name": "candidateId",
+            "in": "path",
+            "required": true,
+            "description": "Candidate ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pipelineStageId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "required": true
+                  },
+                  "pipelineId": {
+                    "type": "string",
+                    "format": "uuid",
+                    "required": false
+                  }
+                },
+                "required": [
+                  "pipelineStageId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate stage updated successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/candidates/{candidateId}/opportunity": {
+      "put": {
+        "description": "Update candidate opportunity",
+        "tags": [
+          "Candidates"
+        ],
+        "parameters": [
+          {
+            "name": "candidateId",
+            "in": "path",
+            "required": true,
+            "description": "Candidate ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "opportunityId": {
+                    "type": "string"
+                  },
+                  "pipelineStageId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "pipelineId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "pipelineStageId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate opportunity updated successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/role-names/list": {
+      "get": {
+        "description": "Get All Role Names.",
+        "tags": [
+          "Role Names"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Company Name"
+          },
+          {
+            "in": "query",
+            "name": "onlyIncludeRoleBenchmarks",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Only Include Role Benchmarks (true/false)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role Names Retrieved."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/role-benchmarks/create": {
+      "post": {
+        "description": "Create a new Role Benchmark if it does not already exist",
+        "tags": [
+          "Role Benchmarks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roleName": {
+                    "type": "string"
+                  },
+                  "traitRanges": {
+                    "type": "array"
+                  },
+                  "companyIds": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/role-benchmarks/search": {
+      "post": {
+        "description": "Search role benchmarks",
+        "tags": [
+          "Role Benchmarks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "searchText": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "orderBy": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/role-benchmarks/{id}": {
+      "delete": {
+        "description": "Deletes a role benchmark and all associated scores",
+        "tags": [
+          "Role Benchmarks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Role Benchmark ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "get": {
+        "description": "Get role benchmark by id",
+        "tags": [
+          "Role Benchmarks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "put": {
+        "description": "Update role benchmark by id",
+        "tags": [
+          "Role Benchmarks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roleName": {
+                    "type": "string"
+                  },
+                  "traitRanges": {
+                    "type": "array"
+                  },
+                  "companyIds": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/benchmark-scores/trigger-benchmark-score-update": {
+      "post": {
+        "description": "Trigger Benchmark Score Update",
+        "tags": [
+          "Benchmark Scores"
+        ],
+        "responses": {
+          "201": {
+            "description": "Benchmark Score Update Triggered"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/hiring-campaigns/campaigns/search": {
+      "post": {
+        "description": "Search hiring campaigns.",
+        "tags": [
+          "Hiring Campaigns"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "number"
+                  },
+                  "role_benchmark_id": {
+                    "type": "number"
+                  },
+                  "searchText": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "orderBy": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/hiring-campaigns/campaigns/create": {
+      "post": {
+        "description": "Create a hiring campaign.",
+        "tags": [
+          "Hiring Campaigns"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "role_name": {
+                    "type": "string"
+                  },
+                  "role_benchmark_id": {
+                    "type": "number"
+                  },
+                  "company_id": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/hiring-campaigns/funnels/search": {
+      "post": {
+        "description": "Search hiring campaign funnels",
+        "tags": [
+          "Hiring Campaigns"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "searchText": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "number"
+                  },
+                  "offset": {
+                    "type": "number"
+                  },
+                  "orderBy": {
+                    "type": "object"
+                  },
+                  "companyId": {
+                    "type": "number"
+                  },
+                  "hiringCampaignId": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/hiring-campaigns/funnels/create": {
+      "post": {
+        "description": "Create a hiring campaign funnel.",
+        "tags": [
+          "Hiring Campaigns"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "hiring_campaign_id": {
+                    "type": "number"
+                  },
+                  "company_id": {
+                    "type": "number"
+                  },
+                  "is_test": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/hiring-pipelines/log-go-high-level-event": {
+      "post": {
+        "description": "Logs an event received from Go High Level",
+        "tags": [
+          "Hiring Pipelines"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contact": {
+                    "type": "object"
+                  },
+                  "opportunity": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/hiring-pipelines/set-go-high-level-credentials": {
+      "post": {
+        "description": "Sets the access and refresh token for Go High Level API access",
+        "tags": [
+          "Hiring Pipelines"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string"
+                  },
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/ghl/login": {
+      "post": {
+        "description": "Get the GHL login URL",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scope": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": [
+                      "opportunities.write",
+                      "opportunities.readonly",
+                      "conversations.write",
+                      "conversations.readonly",
+                      "conversations/message.write",
+                      "conversations/message.readonly"
+                    ]
+                  },
+                  "redirectUri": {
+                    "type": "string",
+                    "default": "http://localhost:3000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the GHL login URL"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/ghl/credential": {
+      "post": {
+        "description": "Set the GHL credential in HB",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Set the GHL credential in HB successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "get": {
+        "description": "Get the GHL credential in HB",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the GHL credential in HB successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/ghl/pipelines": {
+      "get": {
+        "description": "Get Pipelines in GHL",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "query",
+            "required": true,
+            "description": "Location ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns Pipelines from GHL successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/ghl/webhooks/candidates": {
+      "post": {
+        "description": "Create a candidate",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationId": {
+                    "type": "string"
+                  },
+                  "opportunityId": {
+                    "type": "string"
+                  },
+                  "pipelineName": {
+                    "type": "string"
+                  },
+                  "pipelineStageName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "candidateName": {
+                    "type": "string"
+                  },
+                  "companySlug": {
+                    "type": "string"
+                  },
+                  "resumeLink": {
+                    "type": "string"
+                  },
+                  "applicationQuestions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question": {
+                          "type": "string"
+                        },
+                        "answer": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "locationId",
+                  "opportunityId",
+                  "pipelineName",
+                  "pipelineStageName",
+                  "email",
+                  "role",
+                  "candidateName",
+                  "companySlug",
+                  "resumeLink"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate created successfully"
+          }
+        }
+      }
+    },
+    "/ghl/webhooks/candidates/stage": {
+      "post": {
+        "description": "Update candidate stage via GHL",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "parameters": [
+          {
+            "name": "x-go-high-level-secret-key",
+            "in": "header",
+            "required": true,
+            "description": "GoHighLevel Secret Key",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationId": {
+                    "type": "string"
+                  },
+                  "opportunityId": {
+                    "type": "string"
+                  },
+                  "pipelineName": {
+                    "type": "string"
+                  },
+                  "pipelineStageName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "pipelineStageId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate stage updated successfully"
+          }
+        }
+      }
+    },
+    "/ghl/webhooks/candidates/resume": {
+      "post": {
+        "description": "Update candidate resume link via GHL",
+        "tags": [
+          "GoHighLevel"
+        ],
+        "parameters": [
+          {
+            "name": "x-go-high-level-secret-key",
+            "in": "header",
+            "required": true,
+            "description": "GoHighLevel Secret Key",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "opportunityId": {
+                    "type": "string"
+                  },
+                  "resumeLink": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Candidate resume link updated successfully"
+          }
+        }
+      }
+    },
+    "/custom-webhooks": {
+      "post": {
+        "description": "Create a custom webhook for a company",
+        "tags": [
+          "Custom Webhooks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "type": "number"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "type": {
+                    "type": "string",
+                    "optional": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom webhook successfully"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "get": {
+        "description": "Get all custom webhooks",
+        "tags": [
+          "Custom Webhooks"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of custom webhooks"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      },
+      "put": {
+        "description": "Update a custom webhook for a company",
+        "tags": [
+          "Custom Webhooks"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "type": "number"
+                  },
+                  "webhookUrls": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/user-events": {
+      "post": {
+        "description": "Create bulk user events",
+        "tags": [
+          "User Events"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_events": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "user_id": {
+                          "type": "number"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User events created successfully"
+          }
+        }
+      }
+    },
+    "/zapier/subscribe": {
+      "post": {
+        "description": "Subscribe to Zapier catch hook",
+        "tags": [
+          "Zapier"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "triggerType": {
+                    "type": "string",
+                    "enum": [
+                      "SURVEY_RESULT_STATUS_CHANGED",
+                      "SURVEY_COMPLETED"
+                    ]
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "format": "url"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Zapier subscription created"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/zapier/unsubscribe": {
+      "post": {
+        "description": "Unsubscribe to Zapier catch hook",
+        "tags": [
+          "Zapier"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "triggerType": {
+                    "type": "string",
+                    "enum": [
+                      "SURVEY_RESULT_STATUS_CHANGED",
+                      "SURVEY_COMPLETED"
+                    ]
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "format": "url"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Zapier subscription removed"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/zapier/webhooks": {
+      "get": {
+        "description": "Get all webhooks",
+        "tags": [
+          "Zapier"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of zapier webhooks"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/mailer/send": {
+      "post": {
+        "description": "Send an email.",
+        "tags": [
+          "Mailer"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "description": "Email address to send the email from."
+                  },
+                  "to": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to."
+                  },
+                  "cc": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to as CC."
+                  },
+                  "bcc": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to as BCC."
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "Subject of the email."
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Text of the email."
+                  },
+                  "html": {
+                    "type": "string",
+                    "description": "HTML string of the email."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email has been sent."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/mailer/templates/{templateId}/send": {
+      "post": {
+        "description": "Send an email with a template",
+        "tags": [
+          "Mailer"
+        ],
+        "parameters": [
+          {
+            "name": "templateId",
+            "in": "path",
+            "required": true,
+            "description": "Template ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "description": "Email address to send the email from."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name to send the email from."
+                      }
+                    }
+                  },
+                  "to": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to."
+                  },
+                  "cc": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to as CC."
+                  },
+                  "bcc": {
+                    "type": "string | string[]",
+                    "description": "Email address to send the email to as BCC."
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Data to be used in the template."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email has been sent."
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/mailer/templates": {
+      "get": {
+        "description": "Email Templates.",
+        "tags": [
+          "Mailer"
+        ],
+        "responses": {
+          "200": {
+            "description": "All Email Templates"
+          }
+        },
+        "security": [
+          {
+            "ID Token": []
+          }
+        ]
+      }
+    },
+    "/utils/decrypt": {
+      "post": {
+        "description": "Encrypt data",
+        "tags": [
+          "Utils"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cipherText": {
+                    "type": "string",
+                    "description": "Cipher text to decrypt"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Decrypted the data successfully."
+          }
+        }
+      }
+    },
+    "/utils/encrypt": {
+      "post": {
+        "description": "Encrypt data",
+        "tags": [
+          "Utils"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "description": "Data to encrypt"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Encrypted the data successfully."
+          }
+        }
+      }
+    },
+    "/utils/clean-up-data": {
+      "post": {
+        "description": "Clean up data (trim company names, apply benchmark scores to all survey results, fix poorly formatted role names)",
+        "tags": [
+          "Utils"
+        ],
+        "requestBody": {
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ID Token": {
+        "type": "apiKey",
+        "name": "x-id-token",
+        "in": "header"
+      }
+    }
+  },
+  "tags": []
+}

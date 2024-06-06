@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "rest/*": ["./src/rest/*"],
+      "constants/*": ["./src/constants/*"],
+      "utils/*": ["./src/utils/*"],
+      "types/*": ["./src/types/*"],
+      "middlewares/*": ["./src/middlewares/*"]
+    }
+  },
+  "exclude": ["./node_modules"]
+}

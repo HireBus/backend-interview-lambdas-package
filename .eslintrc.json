@@ -1,0 +1,11 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": ["./tsconfig.eslint.json"]
+  },
+  "rules": {
+    "no-param-reassign": "off",
+    "@typescript-eslint/no-non-null-assertion": "off" // when working with middlewares we know that some values will be defined by previous ones
+  }
+}

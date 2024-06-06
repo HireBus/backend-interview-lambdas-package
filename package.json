@@ -1,0 +1,41 @@
+{
+  "name": "lambdas",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "sst bind \"vitest --poolOptions.threads.singleThread\"",
+    "test:local": "vitest --poolOptions.threads.singleThread",
+    "format": "prettier --write ./src/**/*.ts{,x}",
+    "lint": "eslint ./src --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "eslint ./src --fix --ext .js,.ts,.jsx,.tsx",
+    "lint:types": "tsc --noEmit",
+    "lint:all": "concurrently \"pnpm lint\" \"pnpm lint:types\""
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^18.16.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "dotenv": "^16.1.2",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.5.4",
+    "sst": "2.10.4",
+    "swagger-jsdoc": "^6.2.8",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "@aws-crypto/client-node": "^4.0.0",
+    "@middy/core": "^4.5.2",
+    "@middy/http-json-body-parser": "^4.5.2",
+    "@middy/http-multipart-body-parser": "^5.1.0",
+    "@sendgrid/mail": "^7.7.0",
+    "@sentry/serverless": "^7.74.1",
+    "aws-sdk": "^2.1402.0",
+    "axios": "^1.4.0",
+    "base64-js": "^1.5.1",
+    "dayjs": "^1.11.8",
+    "jsonwebtoken": "^9.0.0",
+    "jwks-rsa": "^3.0.1",
+    "zod": "^3.21.4"
+  }
+}
