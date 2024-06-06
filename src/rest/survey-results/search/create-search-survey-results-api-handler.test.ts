@@ -4,7 +4,6 @@ import * as createApiHandlerModule from "utils/api-handler/create-api-handler";
 import { createMockLambdaEvent } from "utils/test-utils/create-mock-lambda-event";
 import { defaultLambdaContext } from "utils/test-utils/default-lambda-context";
 import { describe, expect, it, vi } from "vitest";
-import { joinCompanyNames } from "@core/services/companies/company-names/join-company-names-for-db-column";
 import { createSearchSurveyResultsApiHandler } from "./create-search-survey-results-api-handler";
 
 const mocks = vi.hoisted(() => ({
