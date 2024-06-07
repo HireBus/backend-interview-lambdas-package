@@ -1,4 +1,4 @@
-import { destroyAllKyselyDbConnections } from "@core/db/utils/kysely-client-pool";
+// import { destroyAllKyselyDbConnections } from "@core/db/utils/kysely-client-pool";
 import { type MiddlewareObj } from "@middy/core";
 import {
   type APIGatewayProxyEvent,
@@ -7,7 +7,6 @@ import {
 import { logError } from "middlewares/error-handling/log-error";
 import { commonHeaders } from "utils/http";
 import { processError } from "utils/process-error";
-import { logErrorToSlack } from "./slack/log-error-to-slack";
 import { safeStringify } from "./utils/safe-stringify";
 
 export const errorHandlerMiddleware: MiddlewareObj<
@@ -20,8 +19,8 @@ export const errorHandlerMiddleware: MiddlewareObj<
     const mappedError = processError(request.error, request.event);
 
     logError(mappedError);
-    await destroyAllKyselyDbConnections();
-    await logErrorToSlack(mappedError);
+    // await destroyAllKyselyDbConnections();
+    // await logErrorToSlack(mappedError);
 
     request.response = {
       headers: commonHeaders,

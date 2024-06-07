@@ -1,10 +1,10 @@
 import { searchSurveyResults } from '@core/services/survey-results';
 import { verifyIdTokenMiddleWare } from 'middlewares/authentication/verify-id-token/verify-id-token-middleware';
-import { type AuthMiddleware } from 'middlewares/authorization/auth-middleware-type';
-import { companyUsersAuthMiddleware } from 'middlewares/authorization/company-user/company-users-auth-middleware';
-import { createApiHandler } from 'utils/api-handler/create-api-handler';
-import { makeAPIResponse } from 'utils/http';
-import { searchSurveyResultsSchema } from './schema';
+import { type AuthMiddleware } from "middlewares/authorization/auth-middleware-type";
+import { createApiHandler } from "utils/api-handler/create-api-handler";
+import { makeAPIResponse } from "utils/http";
+import { searchSurveyResultsSchema } from "./schema";
+import { companyUsersAuthMiddleware } from "middlewares/authorization/company-user/company-users-auth-middleware";
 
 export function createSearchSurveyResultsApiHandler(
   authMiddlewares: ReadonlyArray<AuthMiddleware> = [
@@ -25,11 +25,11 @@ export function createSearchSurveyResultsApiHandler(
       });
 
       return makeAPIResponse({
-        type: 'Success',
+        type: "Success",
         data: surveyResults,
       });
     },
-    type: 'private',
+    type: "private",
     authMiddlewares,
   });
 }

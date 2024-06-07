@@ -1,7 +1,7 @@
 import { type KyselyClient } from '@core/db/connections';
-import { fetchCompany } from '@core/services/companies/fetch-company';
-import { makeUnauthorizedError } from '@core/services/errors';
-import { fetchUser } from '@core/services/users/fetch-user';
+// import { fetchCompany } from '@core/services/companies/fetch-company';
+// import { makeUnauthorizedError } from '@core/services/errors';
+// import { fetchUser } from '@core/services/users/fetch-user';
 import { type Company } from '@core/types/company';
 import { type User } from '@core/types/user';
 import { type ApiEventWithAllData } from 'middlewares/authentication/types-for-authentication';

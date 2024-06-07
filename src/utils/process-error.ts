@@ -1,12 +1,12 @@
-import { UnauthorizedError, copyErrorProperties } from '@core/services/errors';
-import { ForbiddenError } from '@core/services/errors/forbidden-error';
-import { ValidationError } from '@core/types/errors';
-import { HTTP_RESPONSES } from 'constants/http';
-import { ZodError, type ZodIssue } from 'zod';
+// import { UnauthorizedError, copyErrorProperties } from '@core/services/errors';
+// import { ForbiddenError } from '@core/services/errors/forbidden-error';
+// import { ValidationError } from '@core/types/errors';
+import { HTTP_RESPONSES } from "constants/http";
+import { ZodError, type ZodIssue } from "zod";
 
 function buildZodIssue(message: string): ZodIssue {
   return {
-    code: 'custom',
+    code: "custom",
     message,
     path: [],
   };
@@ -73,14 +73,14 @@ export function processError(error: Error, event?: Event): MappedError {
       body: error,
       responseType: HTTP_RESPONSES.BadRequest,
     };
-  if (error instanceof UnauthorizedError) {
-    return {
-      ...baseResult,
-      body: 'Incorrect username or password',
-      responseType: HTTP_RESPONSES.Unauthorized,
-      originalError: error,
-    };
-  }
+  // if (error instanceof UnauthorizedError) {
+  //   return {
+  //     ...baseResult,
+  //     body: 'Incorrect username or password',
+  //     responseType: HTTP_RESPONSES.Unauthorized,
+  //     originalError: error,
+  //   };
+  // }
   if (error instanceof ForbiddenError) {
     return {
       ...baseResult,
@@ -92,7 +92,7 @@ export function processError(error: Error, event?: Event): MappedError {
   // TODO: in dev mode we want to return the full error, but this is a security concern in prod
   return {
     ...baseResult,
-    body: copyErrorProperties(error),
+    body: error,
     responseType: HTTP_RESPONSES.ServerError,
     originalError: error,
   };
@@ -109,8 +109,12 @@ function makeBaseResult(event?: Event) {
       }
     : {};
   const routeKeyResult = event?.routeKey ? { routeKey: event.routeKey } : {};
-  const requestOriginResult = headers?.origin ? { requestOrigin: headers.origin } : {};
-  const pathnameResult = headers?.pathname ? { pathname: headers.pathname } : {};
+  const requestOriginResult = headers?.origin
+    ? { requestOrigin: headers.origin }
+    : {};
+  const pathnameResult = headers?.pathname
+    ? { pathname: headers.pathname }
+    : {};
   const queryStringParametersResult = event?.queryStringParameters
     ? { queryStringParameters: event.queryStringParameters }
     : {};

@@ -1,7 +1,7 @@
-import { destroyAllKyselyDbConnections } from '@core/db/utils/kysely-client-pool';
-import { type APIGatewayProxyEventV2 } from 'aws-lambda';
-import { addRequestInfoToEvent } from 'utils/api-handler/add-request-info-to-event';
-import { z, type ZodSchema } from 'zod';
+// import { destroyAllKyselyDbConnections } from '@core/db/utils/kysely-client-pool';
+import { type APIGatewayProxyEventV2 } from "aws-lambda";
+import { addRequestInfoToEvent } from "utils/api-handler/add-request-info-to-event";
+import { z, type ZodSchema } from "zod";
 
 type SchemaType<TBody, THeaders, TPathParams, TQuery> = {
   body?: ZodSchema<TBody>;
@@ -18,7 +18,7 @@ export function verifySchemaMiddleware<TBody, TQuery, THeaders, TPathParams>(
       const validationResult = z.object(schema).safeParse(event);
 
       if (!validationResult.success) {
-        await destroyAllKyselyDbConnections();
+        // await destroyAllKyselyDbConnections();
         throw validationResult.error;
       }
 

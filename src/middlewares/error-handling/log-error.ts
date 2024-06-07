@@ -1,9 +1,9 @@
-import { logger } from '@core/utils/commons';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { type MappedError } from 'utils/process-error';
+// import { logger } from '@core/utils/commons';
+// import path from 'path';
+import { fileURLToPath } from "url";
+import { type MappedError } from "utils/process-error";
 
-const errorHandlerMiddlewareEvent = 'errorHandlerMiddleware' as const;
+const errorHandlerMiddlewareEvent = "errorHandlerMiddleware" as const;
 
 function getPath(): string {
   const currentWorkingDirectory = process.cwd();
@@ -15,9 +15,10 @@ function getFileName(): string {
 }
 
 export function logError(error: MappedError) {
-  logger({
-    path: getPath(),
-    event: errorHandlerMiddlewareEvent,
-    log: error,
-  });
+  console.log(error);
+  // logger({
+  //   path: getPath(),
+  //   event: errorHandlerMiddlewareEvent,
+  //   log: error,
+  // });
 }

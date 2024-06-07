@@ -1,5 +1,5 @@
-import { surveyResultKeys } from '@core/services/survey-results/survey-result-keys';
-import { z } from 'zod';
+// import { surveyResultKeys } from '@core/services/survey-results/survey-result-keys';
+import { z } from "zod";
 
 export const searchSurveyResultsSchema = z.object({
   companies: z.string().trim().optional(),
@@ -13,8 +13,8 @@ export const searchSurveyResultsSchema = z.object({
   orderBy: z
     .object({
       role_name: z.string().optional(),
-      field: z.enum(surveyResultKeys),
-      order: z.enum(['asc', 'desc']),
+      field: z.enum(["id", "created"]),
+      order: z.enum(["asc", "desc"]),
     })
     .optional(),
   roles: z.array(z.string()).optional(),
