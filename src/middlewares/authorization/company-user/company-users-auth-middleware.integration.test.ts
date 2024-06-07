@@ -20,7 +20,13 @@ const mocks = vi.hoisted(() => ({
   makeUnauthorizedError: vi.fn(),
   createTestUser: vi.fn(),
   deleteAllOfTable: vi.fn(),
+  createKyselyDbConnection: vi.fn(() => ({})),
 }));
+
+vi.mock('@core/db/connections', () => ({
+  createKyselyDbConnection: vi.fn(() => ({})),
+}));
+
 
 vi.mock("@core/services/companies-users/create-test-companies-users", () => ({
   createTestCompaniesUsers: mocks.createTestCompaniesUsers,
@@ -36,7 +42,7 @@ vi.mock("@core/services/errors", () => ({
 }));
 
 vi.mock("@core/services/users/testing/create-test-users", () => ({
-  createTestUser: mocks.createTestUser,
+  mocks.createTestUser: mocks.mocks.createTestUser,
 }));
 
 vi.mock("@core/utils/delete-all-of-table", () => ({
@@ -65,11 +71,11 @@ describe("companyUsersAuthMiddleware", () => {
 
   beforeEach(async () => {
     // TODO refactor this to
-    await deleteAllOfTable("hirebus1");
-    await deleteAllOfTable("users");
-    await deleteAllOfTable("hirebus1c");
-    await deleteAllOfTable("companies_users");
-    await deleteAllOfTable("companies");
+    await mocks.deleteAllOfTable("hirebus1");
+    await mocks.deleteAllOfTable("users");
+    await mocks.deleteAllOfTable("hirebus1c");
+    await mocks.deleteAllOfTable("companies_users");
+    await mocks.deleteAllOfTable("companies");
   });
 
   it("should exist", () => {
@@ -87,9 +93,9 @@ function runTests() {
   async function assertThrowsCompanyNotFoundResponse(
     companyIdentifier: CompanyIdentifier
   ) {
-    await deleteAllOfTable("users");
-    await createTestCompany();
-    await createTestUser(dbClient, {
+    await mocks.deleteAllOfTable("users");
+    await mocks.createTestCompany();
+    await mocks.createTestUser(dbClient, {
       id: 2,
       new_company_id: 1,
     });
@@ -110,8 +116,8 @@ function runTests() {
   }
 
   afterAll(async () => {
-    dbClient.allowDestroy();
-    await dbClient.destroy();
+    // dbClient.allowDestroy();
+    // await dbClient.destroy();
   });
 
   it("it should throw company not found response", async () => {
@@ -135,19 +141,19 @@ function runTests() {
     companyIdentifier: CompanyIdentifier,
     realCompanyName: string
   ) {
-    await deleteAllOfTable("users");
-    await createTestCompany({
+    await mocks.deleteAllOfTable("users");
+    await mocks.createTestCompany({
       id: 1,
       name: realCompanyName,
     });
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       id: 2,
     });
 
     const middlewareArgs = createMockMiddlewareArgs({
       companyIdentifier,
       userId: "32",
-      dbClient: createKyselyDbConnection(),
+      dbClient: mocks.createKyselyDbConnection(),
     });
 
     const fn = async () => {
@@ -195,12 +201,12 @@ function runTests() {
     realCompanyName: string,
     companyIdentifier: CompanyIdentifier
   ) {
-    await deleteAllOfTable("users");
-    await createTestCompany({
+    await mocks.deleteAllOfTable("users");
+    await mocks.createTestCompany({
       name: realCompanyName,
     });
-    await createTestCompany();
-    await createTestUser(dbClient, {
+    await mocks.createTestCompany();
+    await mocks.createTestUser(dbClient, {
       new_company_id: 2,
     });
 
@@ -273,13 +279,13 @@ function runTests() {
     ];
 
     for (const companyIdentifier of companyIdentifiers) {
-      await deleteAllOfTable("users");
-      await deleteAllOfTable("companies");
+      await mocks.deleteAllOfTable("users");
+      await mocks.deleteAllOfTable("companies");
 
-      await createTestCompany({
+      await mocks.createTestCompany({
         name: companyName,
       });
-      await createTestUser(dbClient, {
+      await mocks.createTestUser(dbClient, {
         new_company_id: 1,
       });
 
@@ -301,11 +307,11 @@ function runTests() {
     realCompanyName: string,
     companyIdentifier: CompanyIdentifier
   ) {
-    await deleteAllOfTable("users");
-    await createTestCompany({
+    await mocks.deleteAllOfTable("users");
+    await mocks.createTestCompany({
       name: realCompanyName,
     });
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       company_id: null,
       auth_role: "SUPER_ADMIN",
     });
@@ -353,16 +359,16 @@ function runTests() {
     const parentCompanyName = "Parent company";
     const childCompanyName = "Child company";
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       name: parentCompanyName,
     });
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       name: childCompanyName,
       parent_company_id: 1,
     });
 
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       new_company_id: 1,
     });
 
@@ -379,7 +385,7 @@ function runTests() {
   });
 
   it("should throw an error if one of the companies listed or children companies does not belong to the user", async () => {
-    await createTestCompany(); // id 3
+    await mocks.createTestCompany(); // id 3
 
     await createTestCompanies([
       { id: 2, parent_company_id: 1 }, // id 2
@@ -387,11 +393,11 @@ function runTests() {
       { id: 4 }, // id 4
     ]);
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       parent_company_id: 2,
     }); // id 5
 
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       new_company_id: 1,
     });
 
@@ -426,16 +432,16 @@ function runTests() {
     const parentCompanyName = "Parent company";
     const childCompanyName = "Child company";
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       name: parentCompanyName,
     });
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       name: childCompanyName,
       parent_company_id: 1,
     });
 
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       id: 1,
       new_company_id: 1,
       auth_role: "FRANCHISE_OWNER",
@@ -455,8 +461,8 @@ function runTests() {
   });
 
   it("should not throw if company user is part of company", async () => {
-    await createTestCompany();
-    await createTestUser(dbClient, {
+    await mocks.createTestCompany();
+    await mocks.createTestUser(dbClient, {
       auth_role: "COMPANY_OWNER",
       new_company_id: 1,
     });
@@ -482,8 +488,8 @@ function runTests() {
   ])(
     "should allow for identifier $identifier for auth role $authRole",
     async ({ authRole, identifier }) => {
-      await createTestCompany();
-      await createTestUser(dbClient, {
+      await mocks.createTestCompany();
+      await mocks.createTestUser(dbClient, {
         auth_role: authRole,
         new_company_id: 1,
       });
@@ -503,7 +509,7 @@ function runTests() {
   );
 
   it("should allow for non-super admin to request for multiple companies", async () => {
-    await createTestCompany(); // id 3
+    await mocks.createTestCompany(); // id 3
 
     await createTestCompanies([
       { id: 2, parent_company_id: 1 }, // id 2
@@ -511,11 +517,11 @@ function runTests() {
       { id: 4 }, // id 4
     ]);
 
-    await createTestCompany({
+    await mocks.createTestCompany({
       parent_company_id: 2,
     }); // id 5
 
-    await createTestUser(dbClient, {
+    await mocks.createTestUser(dbClient, {
       new_company_id: 1,
     });
 
